@@ -1,4 +1,5 @@
 import csv
+import pprint
 
 def fix_turnstile_data(filenames):
     '''
@@ -34,8 +35,57 @@ def fix_turnstile_data(filenames):
     Sample updated file:
     https://www.dropbox.com/s/074xbgio4c39b7h/solution_turnstile_110528.txt
     '''
-    for name in filenames:
-        # your code here
 
+    for file in filenames:
+        # create file input object f_in to work with in_data.csv file
+        f_in = open(file, 'r')
+        # create file output object f_out to write to the new out_data.csv
+        f_out = open('updated_' + file, 'w')
+        # creater csv readers and writers based on our file objects
+        reader_in  = csv.reader(f_in, delimiter=',')
+        writer_out = csv.writer(f_out, delimiter=',')
 
-fix_turnstile_data(filenames)
+        for row in reader_in:
+            location = row[:3]
+            date_times = list(chunks(row[3:], 5))
+
+            for dt in date_times: 
+                full_row = location + dt
+                full_row = [x.strip() for x in full_row]
+                writer_out = csv.writer(f_out)
+                writer_out.writerow(full_row)
+
+        f_in.close()
+        f_out.close()
+
+def chunks(l, n):
+    """Yield successive n-sized chunks from l."""
+    for i in xrange(0, len(l), n):
+        yield l[i:i+n]
+
+def test_data(file):
+    PATH = '/Users/joshRpowell/Dropbox/Udacity/DataAnalyst/P2/'
+
+    # create file input object f_in to work with in_data.csv file
+    f_in = open(PATH + file, 'r')
+    # create file output object f_out to write to the new out_data.csv
+    f_out = open(PATH + 'updated_' + file, 'w')
+    # creater csv readers and writers based on our file objects
+    reader_in = csv.reader(f_in, delimiter=',')
+    writer_out = csv.writer(f_out, delimiter=',')
+
+    for i in range(2):
+        rows = reader_in.next()
+        location = rows[:3]
+        # print location
+        date_times = list(chunks(reader_in.next()[3:], 5))
+        # pprint.pprint(date_times)
+        for dt in date_times: 
+            full_row = location + dt
+            # print full_row
+            full_row = [x.strip() for x in full_row]
+            print full_row
+            writer_out = csv.writer(f_out)
+            writer_out.writerow(full_row)
+
+test_data('turnstile_110528.txt')
