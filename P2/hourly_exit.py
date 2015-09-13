@@ -31,6 +31,11 @@ def get_hourly_exits(df):
     9              9  A002  R051  02-00-00  05-02-11  12:00:00  REGULAR   3145094   1088753              153            333
     '''
     
-    #your code here
+    diff = df['ENTRIESn'] - df['ENTRIESn'].shift()
+    df['ENTRIESn_hourly'] = diff.fillna(0)
+
+    diff = df['EXITSn'] - df['EXITSn'].shift()
+    df['EXITSn_hourly'] = diff.fillna(0)
+
     return df
 
