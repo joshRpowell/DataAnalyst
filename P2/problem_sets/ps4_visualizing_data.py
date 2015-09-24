@@ -2,6 +2,11 @@ from pandas import *
 from ggplot import *
 import datetime
 
+def weekdays(dates):
+    for date in dates:
+        # return date.weekday()
+        return date.strftime('%A')
+
 def plot_weather_data(turnstile_weather):
     '''
     You are passed in a dataframe called turnstile_weather. 
@@ -31,19 +36,33 @@ def plot_weather_data(turnstile_weather):
     subset, about 1/3 of the actual data in the turnstile_weather dataframe.
     '''
 
-    plot = ggplot(turnstile_weather, aes(x=pandas.to_datetime(turnstile_weather['DATEn']), y='ENTRIESn_hourly')) + \
-        geom_point() + scale_x_date(labels='%m-%Y') 
-#       ggtitle('Entries by Date') + xlab('Date') + ylab('Entries')
-    print plot
-    return plot
+    turnstile_weather['DATEn'] = pandas.to_datetime(turnstile_weather['DATEn'])
+    turnstile_weather['weekday'] = pandas.to_datetime(turnstile_weather['DATEn']).apply(lambda x: x.weekday())
+    # turnstile_weather = turnstile_weather.groupby(['DATEn']).mean().reset_index()
+    turnstile_weather = turnstile_weather.groupby(['weekday'], as_index=False).mean().reset_index()
 
+    # plot = ggplot(turnstile_weather, aes(x='DATEn', y='ENTRIESn_hourly')) + \
+    #     geom_bar() #+ ggtitle('Mean Entries by Date') + xlab('Date') + ylab('Mean Entries')
+    #     # geom_point() + geom_line() + ggtitle('Mean Entries by Date') + xlab('Date') + ylab('Mean Entries')
+
+    # Re-label list for later
+    label_list = [ '', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+    # Plot with day of week relabeled as abreviation
+    plot = ggplot(turnstile_weather, aes('weekday', 'ENTRIESn_hourly')) + \
+        geom_bar(stat='identity', fill='blue') + \
+        ggtitle('Subway entries by day of week') + \
+        scale_x_discrete(labels=label_list)
+
+    print plot
+    # return plot
 
 def dataframe(filename):
     dataframe = pandas.read_csv(filename)
     return dataframe
 
-filename = '/Users/joshRpowell/Dropbox/Udacity/DataAnalyst/P2/turnstile_data_master_with_weather.csv'
-df = dataframe(filename)[:15000]
+filename = '/Users/joshRpowell/Dropbox/Udacity/DataAnalyst/P2/data/turnstile_data_master_with_weather.csv'
+df = dataframe(filename)
 
 plot_weather_data(df)
 
