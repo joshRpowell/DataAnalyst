@@ -11,16 +11,16 @@ def num_rainy_days(filename):
     rained).  The dataframe will be titled 'weather_data'. You'll
     need to provide the SQL query.  You might find SQL's count function
     useful for this exercise.  You can read more about it here:
-    
+
     https://dev.mysql.com/doc/refman/5.1/en/counting-rows.html
-    
+
     You might also find that interpreting numbers as integers or floats may not
     work initially.  In order to get around this issue, it may be useful to cast
     these numbers as integers.  This can be done by writing cast(column as integer).
     So for example, if we wanted to cast the maxtempi column as an integer, we would actually
-    write something like where cast(maxtempi as integer) = 76, as opposed to simply 
+    write something like where cast(maxtempi as integer) = 76, as opposed to simply
     where maxtempi = 76.
-    
+
     You can see the weather data that we are passing in below:
     https://www.dropbox.com/s/7sf0yqc9ykpq3w8/weather_underground.csv
     '''
@@ -32,16 +32,16 @@ def num_rainy_days(filename):
     FROM
     weather_data
     WHERE
-    rain = 1
+    rain == 1
     """
 
     #Execute your SQL command against the pandas frame
     rainy_days = pandasql.sqldf(q.lower(), locals())
-    # print rainy_days
+    print rainy_days
     return rainy_days
 
-filename = '/Users/joshRpowell/Dropbox/Udacity/DataAnalyst/P2/weather_underground.csv'
-# num_rainy_days('/Users/joshRpowell/Dropbox/Udacity/DataAnalyst/P2/weather_underground.csv')
+file_path = '/Users/jpowell/Dropbox/Udacity/DataAnalyst/P2/data/weather_underground.csv'
+# num_rainy_days(file_path)
 
 import pandas
 import pandasql
@@ -53,21 +53,20 @@ def max_temp_aggregate_by_fog(filename):
     weather data.  The SQL query should return two columns and
     two rows - whether it was foggy or not (0 or 1) and the max
     maxtempi for that fog value (i.e., the maximum max temperature
-    for both foggy and non-foggy days).  The dataframe will be 
+    for both foggy and non-foggy days).  The dataframe will be
     titled 'weather_data'. You'll need to provide the SQL query.
-    
+
     You might also find that interpreting numbers as integers or floats may not
     work initially.  In order to get around this issue, it may be useful to cast
     these numbers as integers.  This can be done by writing cast(column as integer).
     So for example, if we wanted to cast the maxtempi column as an integer, we would actually
-    write something like where cast(maxtempi as integer) = 76, as opposed to simply 
+    write something like where cast(maxtempi as integer) = 76, as opposed to simply
     where maxtempi = 76.
-    
+
     You can see the weather data that we are passing in below:
     https://www.dropbox.com/s/7sf0yqc9ykpq3w8/weather_underground.csv
     '''
     weather_data = pandas.read_csv(filename)
-
 
     q = """
     SELECT
@@ -77,13 +76,13 @@ def max_temp_aggregate_by_fog(filename):
     GROUP BY
     fog
     """
-    
+
     #Execute your SQL command against the pandas frame
     foggy_days = pandasql.sqldf(q.lower(), locals())
     print foggy_days
     return foggy_days
 
-# max_temp_aggregate_by_fog(filename)
+# max_temp_aggregate_by_fog(file_path)
 
 import pandas
 import pandasql
@@ -97,20 +96,20 @@ def avg_weekend_temperature(filename):
     or Sunday (i.e., the the average mean temperature on weekends).
     The dataframe will be titled 'weather_data' and you can access
     the date in the dataframe via the 'date' column.
-    
+
     You'll need to provide  the SQL query.
-    
+
     You might also find that interpreting numbers as integers or floats may not
     work initially.  In order to get around this issue, it may be useful to cast
     these numbers as integers.  This can be done by writing cast(column as integer).
     So for example, if we wanted to cast the maxtempi column as an integer, we would actually
-    write something like where cast(maxtempi as integer) = 76, as opposed to simply 
+    write something like where cast(maxtempi as integer) = 76, as opposed to simply
     where maxtempi = 76.
-    
+
     Also, you can convert dates to days of the week via the 'strftime' keyword in SQL.
     For example, cast (strftime('%w', date) as integer) will return 0 if the date
     is a Sunday or 6 if the date is a Saturday.
-    
+
     You can see the weather data that we are passing in below:
     https://www.dropbox.com/s/7sf0yqc9ykpq3w8/weather_underground.csv
     '''
@@ -122,17 +121,17 @@ def avg_weekend_temperature(filename):
     FROM
     weather_data
     WHERE
-    cast(strftime('%w', date) as integer) == 0 
-    OR 
+    cast(strftime('%w', date) as integer) == 0
+    OR
     cast(strftime('%w', date) as integer) == 6
     """
-    
+
     #Execute your SQL command against the pandas frame
     mean_temp_weekends = pandasql.sqldf(q.lower(), locals())
     print mean_temp_weekends
     return mean_temp_weekends
 
-# avg_weekend_temperature(filename)
+# avg_weekend_temperature(file_path)
 
 import pandas
 import pandasql
@@ -142,16 +141,16 @@ def avg_min_temperature(filename):
     '''
     This function should run a SQL query on a dataframe of
     weather data. More specifically you want to find the average
-    minimum temperature (mintempi column of the weather dataframe) on 
+    minimum temperature (mintempi column of the weather dataframe) on
     rainy days where the minimum temperature is greater than 55 degrees.
-    
+
     You might also find that interpreting numbers as integers or floats may not
     work initially.  In order to get around this issue, it may be useful to cast
     these numbers as integers.  This can be done by writing cast(column as integer).
     So for example, if we wanted to cast the maxtempi column as an integer, we would actually
-    write something like where cast(maxtempi as integer) = 76, as opposed to simply 
+    write something like where cast(maxtempi as integer) = 76, as opposed to simply
     where maxtempi = 76.
-    
+
     You can see the weather data that we are passing in below:
     https://www.dropbox.com/s/7sf0yqc9ykpq3w8/weather_underground.csv
     '''
@@ -166,16 +165,16 @@ def avg_min_temperature(filename):
     weather_data
     WHERE
     mintempi > 55
-    AND 
+    AND
     rain == 1
     """
-    
+
     #Execute your SQL command against the pandas frame
     avg_min_temp_rainy = pandasql.sqldf(q.lower(), locals())
-    print avg_min_temp_rainy
+    # print avg_min_temp_rainy
     return avg_min_temp_rainy
 
-avg_min_temperature(filename)
+# avg_min_temperature(file_path)
 
 import csv
 import pprint
@@ -186,30 +185,30 @@ def fix_turnstile_data(filenames):
     Filenames is a list of MTA Subway turnstile text files. A link to an example
     MTA Subway turnstile text file can be seen at the URL below:
     http://web.mta.info/developers/data/nyct/turnstile/turnstile_110507.txt
-    
+
     As you can see, there are numerous data points included in each row of the
-    a MTA Subway turnstile text file. 
+    a MTA Subway turnstile text file.
 
     You want to write a function that will update each row in the text
     file so there is only one entry per row. A few examples below:
     A002,R051,02-00-00,05-28-11,00:00:00,REGULAR,003178521,001100739
     A002,R051,02-00-00,05-28-11,04:00:00,REGULAR,003178541,001100746
     A002,R051,02-00-00,05-28-11,08:00:00,REGULAR,003178559,001100775
-    
+
     Write the updates to a different text file in the format of "updated_" + filename.
     For example:
         1) if you read in a text file called "turnstile_110521.txt"
         2) you should write the updated data to "updated_turnstile_110521.txt"
 
-    The order of the fields should be preserved. Remember to read through the 
-    Instructor Notes below for more details on the task. 
-    
+    The order of the fields should be preserved. Remember to read through the
+    Instructor Notes below for more details on the task.
+
     In addition, here is a CSV reader/writer introductory tutorial:
     http://goo.gl/HBbvyy
-    
+
     You can see a sample of the turnstile text file that's passed into this function
     and the the corresponding updated file in the links below:
-    
+
     Sample input file:
     https://www.dropbox.com/s/mpin5zv4hgrx244/turnstile_110528.txt
     Sample updated file:
@@ -229,7 +228,7 @@ def fix_turnstile_data(filenames):
             location = row[:3]
             date_times = list(chunks(row[3:], 5))
 
-            for dt in date_times: 
+            for dt in date_times:
                 full_row = location + dt
                 full_row = [x.strip() for x in full_row]
                 writer_out = csv.writer(f_out)
@@ -239,12 +238,12 @@ def fix_turnstile_data(filenames):
         f_out.close()
 
 def chunks(l, n):
-    """Yield successive n-sized chunks from l."""
+    # Yield successive n-sized chunks from l
     for i in xrange(0, len(l), n):
         yield l[i:i+n]
 
 def test_data(file):
-    PATH = '/Users/joshRpowell/Dropbox/Udacity/DataAnalyst/P2/'
+    PATH = '/Users/jpowell/Dropbox/Udacity/DataAnalyst/P2/data/'
 
     # create file input object f_in to work with in_data.csv file
     f_in = open(PATH + file, 'r')
@@ -260,7 +259,7 @@ def test_data(file):
         # print location
         date_times = list(chunks(reader_in.next()[3:], 5))
         # pprint.pprint(date_times)
-        for dt in date_times: 
+        for dt in date_times:
             full_row = location + dt
             # print full_row
             full_row = [x.strip() for x in full_row]
@@ -273,21 +272,21 @@ test_data('turnstile_110528.txt')
 # QUESTION 6
 def create_master_turnstile_file(filenames, output_file):
     '''
-    Write a function that takes the files in the list filenames, which all have the 
+    Write a function that takes the files in the list filenames, which all have the
     columns 'C/A, UNIT, SCP, DATEn, TIMEn, DESCn, ENTRIESn, EXITSn', and consolidates
     them into one file located at output_file.  There should be ONE row with the column
     headers, located at the top of the file. The input files do not have column header
     rows of their own.
-    
+
     For example, if file_1 has:
     line 1 ...
     line 2 ...
-    
+
     and another file, file_2 has:
     line 3 ...
     line 4 ...
     line 5 ...
-    
+
     We need to combine file_1 and file_2 into a master_file like below:
      'C/A, UNIT, SCP, DATEn, TIMEn, DESCn, ENTRIESn, EXITSn'
     line 1 ...
@@ -310,20 +309,20 @@ def filter_by_regular(filename):
     '''
     This function should read the csv file located at filename into a pandas dataframe,
     and filter the dataframe to only rows where the 'DESCn' column has the value 'REGULAR'.
-    
+
     For example, if the pandas dataframe is as follows:
     ,C/A,UNIT,SCP,DATEn,TIMEn,DESCn,ENTRIESn,EXITSn
     0,A002,R051,02-00-00,05-01-11,00:00:00,REGULAR,3144312,1088151
     1,A002,R051,02-00-00,05-01-11,04:00:00,DOOR,3144335,1088159
     2,A002,R051,02-00-00,05-01-11,08:00:00,REGULAR,3144353,1088177
     3,A002,R051,02-00-00,05-01-11,12:00:00,DOOR,3144424,1088231
-    
+
     The dataframe will look like below after filtering to only rows where DESCn column
     has the value 'REGULAR':
     0,A002,R051,02-00-00,05-01-11,00:00:00,REGULAR,3144312,1088151
     2,A002,R051,02-00-00,05-01-11,08:00:00,REGULAR,3144353,1088177
     '''
-    
+
     turnstile_data = pd.read_csv(filename)
     turnstile_data = turnstile_data[turnstile_data['DESCn'] == 'REGULAR']
 
@@ -340,16 +339,16 @@ def get_hourly_entries(df):
     (i.e., unique SCP, C/A, and UNIT).  This function should change
     these cumulative entry numbers to a count of entries since the last reading
     (i.e., entries since the last row in the dataframe).
-    
+
     More specifically, you want to do two things:
        1) Create a new column called ENTRIESn_hourly
-       2) Assign to the column the difference between ENTRIESn of the current row 
+       2) Assign to the column the difference between ENTRIESn of the current row
           and the previous row. If there is any NaN, fill/replace it with 1.
-    
+
     You may find the pandas functions shift() and fillna() to be helpful in this exercise.
-    
+
     Examples of what your dataframe should look like at the end of this exercise:
-    
+
            C/A  UNIT       SCP     DATEn     TIMEn    DESCn  ENTRIESn    EXITSn  ENTRIESn_hourly
     0     A002  R051  02-00-00  05-01-11  00:00:00  REGULAR   3144312   1088151                1
     1     A002  R051  02-00-00  05-01-11  04:00:00  REGULAR   3144335   1088159               23
@@ -381,14 +380,14 @@ def get_hourly_exits(df):
     (i.e., unique SCP, C/A, and UNIT).  This function should change
     these cumulative exit numbers to a count of exits since the last reading
     (i.e., exits since the last row in the dataframe).
-    
+
     More specifically, you want to do two things:
        1) Create a new column called EXITSn_hourly
-       2) Assign to the column the difference between EXITSn of the current row 
+       2) Assign to the column the difference between EXITSn of the current row
           and the previous row. If there is any NaN, fill/replace it with 0.
-    
+
     You may find the pandas functions shift() and fillna() to be helpful in this exercise.
-    
+
     Example dataframe below:
 
           Unnamed: 0   C/A  UNIT       SCP     DATEn     TIMEn    DESCn  ENTRIESn    EXITSn  ENTRIESn_hourly  EXITSn_hourly
@@ -403,7 +402,7 @@ def get_hourly_exits(df):
     8              8  A002  R051  02-00-00  05-02-11  08:00:00  REGULAR   3144941   1088420               36             89
     9              9  A002  R051  02-00-00  05-02-11  12:00:00  REGULAR   3145094   1088753              153            333
     '''
-    
+
     diff = df['ENTRIESn'] - df['ENTRIESn'].shift()
     df['ENTRIESn_hourly'] = diff.fillna(0)
 
@@ -419,16 +418,16 @@ def time_to_hour(time):
     '''
     Given an input variable time that represents time in the format of:
     "00:00:00" (hour:minutes:seconds)
-    
+
     Write a function to extract the hour part from the input variable time
     and return it as an integer. For example:
         1) if hour is 00, your code should return 0
         2) if hour is 01, your code should return 1
         3) if hour is 21, your code should return 21
-        
+
     Please return hour as an integer.
     '''
-    
+
     hour = int(time[:2])
     return hour
 
@@ -439,14 +438,14 @@ def reformat_subway_dates(date):
     '''
     The dates in our subway data are formatted in the format month-day-year.
     The dates in our weather underground data are formatted year-month-day.
-    
+
     In order to join these two data sets together, we'll want the dates formatted
     the same way.  Write a function that takes as its input a date in the MTA Subway
     data format, and returns a date in the weather underground format.
-    
-    Hint: 
+
+    Hint:
     There are a couple of useful functions in the datetime library that will
-    help on this assignment, called strptime and strftime. 
+    help on this assignment, called strptime and strftime.
     More info can be seen here and further in the documentation section:
     http://docs.python.org/2/library/datetime.html#datetime.datetime.strptime
     '''

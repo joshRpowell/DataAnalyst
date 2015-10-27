@@ -7,9 +7,9 @@ def simple_heuristic(file_path):
     '''
     In this exercise, we will perform some rudimentary practices similar to those of
     an actual data scientist.
-    
+
     Part of a data scientist's job is to use her or his intuition and insight to
-    write algorithms and heuristics. A data scientist also creates mathematical models 
+    write algorithms and heuristics. A data scientist also creates mathematical models
     to make predictions based on some attributes from the data that they are examining.
 
     We would like for you to take your knowledge and intuition about the Titanic
@@ -17,23 +17,23 @@ def simple_heuristic(file_path):
     or perished. You can read more about the Titanic and specifics about this dataset at:
     http://en.wikipedia.org/wiki/RMS_Titanic
     http://www.kaggle.com/c/titanic-gettingStarted
-        
+
     In this exercise and the following ones, you are given a list of Titantic passengers
-    and their associated information. More information about the data can be seen at the 
+    and their associated information. More information about the data can be seen at the
     link below:
-    http://www.kaggle.com/c/titanic-gettingStarted/data. 
+    http://www.kaggle.com/c/titanic-gettingStarted/data.
 
     For this exercise, you need to write a simple heuristic that will use
     the passengers' gender to predict if that person survived the Titanic disaster.
-    
+
     You prediction should be 78% accurate or higher.
-        
+
     Here's a simple heuristic to start off:
        1) If the passenger is female, your heuristic should assume that the
        passenger survived.
        2) If the passenger is male, you heuristic should
        assume that the passenger did not survive.
-    
+
     You can access the gender of a passenger via passenger['Sex'].
     If the passenger is male, passenger['Sex'] will return a string "male".
     If the passenger is female, passenger['Sex'] will return a string "female".
@@ -50,7 +50,7 @@ def simple_heuristic(file_path):
     And if a passenger is predicted to have perished in the disaster:
     passenger_id = passenger['PassengerId']
     predictions[passenger_id] = 0
-    
+
     You can also look at the Titantic data that you will be working with
     at the link below:
     https://www.dropbox.com/s/r5f9aos8p9ri9sa/titanic_data.csv
@@ -67,9 +67,9 @@ def simple_heuristic(file_path):
         else:
             predictions[passenger_id] = 1
 
-    return predictions
+    print predictions
 
-file_path = '/Users/joshRpowell/Dropbox/Udacity/DataAnalyst/P2/titanic_data.csv'
+file_path = '/Users/jpowell/Dropbox/Udacity/DataAnalyst/P2/data/titanic_data.csv'
 # simple_heuristic(file_path)
 
 # QUESTION 2
@@ -80,35 +80,35 @@ def complex_heuristic(file_path):
     http://www.kaggle.com/c/titanic-gettingStarted/data
 
     For this exercise, you need to write a more sophisticated algorithm
-    that will use the passengers' gender and their socioeconomical class and age 
-    to predict if they survived the Titanic diaster. 
-    
+    that will use the passengers' gender and their socioeconomical class and age
+    to predict if they survived the Titanic diaster.
+
     You prediction should be 79% accurate or higher.
-    
+
     Here's the algorithm, predict the passenger survived if:
     1) If the passenger is female or
     2) if his/her socioeconomic status is high AND if the passenger is under 18
-    
+
     Otherwise, your algorithm should predict that the passenger perished in the disaster.
-    
+
     Or more specifically in terms of coding:
     female or (high status and under 18)
-    
+
     You can access the gender of a passenger via passenger['Sex'].
     If the passenger is male, passenger['Sex'] will return a string "male".
     If the passenger is female, passenger['Sex'] will return a string "female".
-    
+
     You can access the socioeconomic status of a passenger via passenger['Pclass']:
     High socioeconomic status -- passenger['Pclass'] is 1
     Medium socioeconomic status -- passenger['Pclass'] is 2
     Low socioeconomic status -- passenger['Pclass'] is 3
 
     You can access the age of a passenger via passenger['Age'].
-    
+
     Write your prediction back into the "predictions" dictionary. The
     key of the dictionary should be the Passenger's id (which can be accessed
     via passenger["PassengerId"]) and the associated value should be 1 if the
-    passenger survived or 0 otherwise. 
+    passenger survived or 0 otherwise.
 
     For example, if a passenger is predicted to have survived:
     passenger_id = passenger['PassengerId']
@@ -117,7 +117,7 @@ def complex_heuristic(file_path):
     And if a passenger is predicted to have perished in the disaster:
     passenger_id = passenger['PassengerId']
     predictions[passenger_id] = 0
-    
+
     You can also look at the Titantic data that you will be working with
     at the link below:
     https://www.dropbox.com/s/r5f9aos8p9ri9sa/titanic_data.csv
@@ -137,7 +137,6 @@ def complex_heuristic(file_path):
 
     return predictions
 
-file_path = '/Users/joshRpowell/Dropbox/Udacity/DataAnalyst/P2/titanic_data.csv'
 # complex_heuristic(file_path)
 
 # QUESTION 3
@@ -152,7 +151,7 @@ def custom_heuristic(file_path):
     survived the Titanic diaster.
 
     Can your custom heuristic beat 80% accuracy?
-    
+
     The available attributes are:
     Pclass          Passenger Class
                     (1 = 1st; 2 = 2nd; 3 = 3rd)
@@ -166,7 +165,7 @@ def custom_heuristic(file_path):
     Cabin           Cabin
     Embarked        Port of Embarkation
                     (C = Cherbourg; Q = Queenstown; S = Southampton)
-                    
+
     SPECIAL NOTES:
     Pclass is a proxy for socioeconomic status (SES)
     1st ~ Upper; 2nd ~ Middle; 3rd ~ Lower
@@ -182,11 +181,11 @@ def custom_heuristic(file_path):
     Spouse:   husband or wife of passenger aboard Titanic (mistresses and fiancees ignored)
     Parent:   mother or father of passenger aboard Titanic
     Child:    son, daughter, stepson, or stepdaughter of passenger aboard Titanic
-    
+
     Write your prediction back into the "predictions" dictionary. The
     key of the dictionary should be the passenger's id (which can be accessed
     via passenger["PassengerId"]) and the associating value should be 1 if the
-    passenger survvied or 0 otherwise. 
+    passenger survvied or 0 otherwise.
 
     For example, if a passenger is predicted to have survived:
     passenger_id = passenger['PassengerId']
@@ -195,7 +194,7 @@ def custom_heuristic(file_path):
     And if a passenger is predicted to have perished in the disaster:
     passenger_id = passenger['PassengerId']
     predictions[passenger_id] = 0
-    
+
     You can also look at the Titantic data that you will be working with
     at the link below:
     https://www.dropbox.com/s/r5f9aos8p9ri9sa/titanic_data.csv
@@ -204,10 +203,13 @@ def custom_heuristic(file_path):
     predictions = {}
     df = pandas.read_csv(file_path)
     for passenger_index, passenger in df.iterrows():
+        passenger_id = passenger['PassengerId']
         #
         if (passenger['Sex'] == 'female' and passenger['Parch'] <= 3 and passenger['SibSp'] <= 2):
             predictions[passenger_id] = 1 #survived
         else:
             predictions[passenger_id] = 0
         #
-    return predictions
+    print predictions
+
+custom_heuristic(file_path)
