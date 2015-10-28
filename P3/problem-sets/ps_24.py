@@ -12,7 +12,7 @@
 
 import xml.etree.ElementTree as ET
 
-PATENTS = 'patent.data'
+PATENTS = '/Users/jpowell/Dropbox/Udacity/DataAnalyst/P3/problem-sets/patent.data'
 
 def get_root(fname):
 
