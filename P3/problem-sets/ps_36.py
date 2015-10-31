@@ -20,14 +20,15 @@ Changes to "process_file" function will not be take into account.
 import csv
 import pprint
 
-CITIES = 'cities.csv'
+CITIES = '/Users/jpowell/Dropbox/Udacity/DataAnalyst/P3/problem-sets/cities.csv'
 
 
 def check_loc(point, lat, longi):
-    # YOUR CODE HERE
-
-    pass
-
+    pair = point.split(" ")
+    if pair[0] == lat and pair[1] == longi:
+        return True
+    else:
+        return False
 
 def process_file(filename):
     data = []

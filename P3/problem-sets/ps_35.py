@@ -16,14 +16,18 @@ import codecs
 import csv
 import pprint
 
-CITIES = 'cities.csv'
+CITIES = '/Users/jpowell/Dropbox/Udacity/DataAnalyst/P3/problem-sets/cities.csv'
 
 
 def fix_name(name):
-
-    # YOUR CODE HERE
-
-    return name
+    # print name
+    if name == 'NULL':
+        return []
+    elif name.startswith('{'):
+        pair = name.translate(None, "{}").split('|')
+        return pair
+    else:
+        return [name]
 
 
 def process_file(filename):

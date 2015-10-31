@@ -17,15 +17,23 @@ import csv
 import json
 import pprint
 
-CITIES = 'cities.csv'
+CITIES = '/Users/jpowell/Dropbox/Udacity/DataAnalyst/P3/problem-sets/cities.csv'
 
 
 def fix_area(area):
+    if area == 'NULL':
+        return None
+    else:
+        try:
+            return float(area)
+        except ValueError:
+            pair = area.translate(None, "{}").split('|')
+            length = []
+            for e in pair:
+                length.append(len(e))
+                i = length.index(max(length))
 
-    # YOUR CODE HERE
-
-    return area
-
+            return float(pair[i])
 
 
 def process_file(filename):

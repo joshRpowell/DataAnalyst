@@ -39,10 +39,7 @@ def audit_file(filename, fields):
 
     with open (filename,'r') as f:
         data = list(csv.DictReader(f))
-        # print data[3:]
-        FIELDS = ["areaMetro", "areaLand"]
-        for i in FIELDS:
-        # for i in fields:
+        for i in fields:
             fieldtypes[i] = []
             for row in data[3:]:
               if row[i] == "NULL" or "":
@@ -50,13 +47,14 @@ def audit_file(filename, fields):
               elif row[i].startswith('{'):
                 fieldtypes[i].append(type([]))
               elif is_int(row[i]) == 'int':
-                fieldtypes[i].append(type[1])
+                fieldtypes[i].append(type(1))
               elif is_float(row[i]) == 'float':
                 fieldtypes[i].append(type(1.1))
               else:
                 fieldtypes[i].append(type("a"))
             fieldtypes[i] = set(fieldtypes[i])
 
+    # print fieldtypes
     return fieldtypes
 
 def is_float(x):
