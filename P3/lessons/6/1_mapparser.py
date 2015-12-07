@@ -13,6 +13,7 @@ Note that your code will be tested with a different data file than the 'example.
 import xml.etree.cElementTree as ET
 import pprint
 
+
 def count_tags(filename):
     d = {}
     for event, elem in ET.iterparse(filename):
@@ -24,19 +25,20 @@ def count_tags(filename):
     # print pprint.pprint(d)
     return d
 
+
 def test():
     osm_file = open("/Users/jpowell/Dropbox/Udacity/DataAnalyst/P3/lessons/example.osm", "r")
 
     tags = count_tags(osm_file)
     pprint.pprint(tags)
     assert tags == {'bounds': 1,
-                     'member': 3,
-                     'nd': 4,
-                     'node': 20,
-                     'osm': 1,
-                     'relation': 1,
-                     'tag': 7,
-                     'way': 1}
+                    'member': 3,
+                    'nd': 4,
+                    'node': 20,
+                    'osm': 1,
+                    'relation': 1,
+                    'tag': 7,
+                    'way': 1}
 
 
 if __name__ == "__main__":

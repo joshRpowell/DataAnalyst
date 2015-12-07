@@ -90,49 +90,49 @@ lower = re.compile(r'^([a-z]|_)*$')
 lower_colon = re.compile(r'^([a-z]|_)*:([a-z]|_)*$')
 problemchars = re.compile(r'[=\+/&<>;\'"\?%#$@\,\. \t\r\n]')
 
-CREATED = [ "version", "changeset", "timestamp", "user", "uid"]
+CREATED = ["version", "changeset", "timestamp", "user", "uid"]
 
 
 def shape_element(element):
     node = {"created": {}, "type": 'node', "address": {}, "node_refs": []}
-    if element.tag == "node" or element.tag == "way" :
+    if element.tag == "node" or element.tag == "way":
         # YOUR CODE HERE
         # print element.tag
         # print element.attrib.keys()
         for key in element.attrib.keys():
-          if key in CREATED:
-            node["created"][key] = element.attrib[key]
-          elif key == "lat" or key == "lon":
-            node["pos"] = []
-            lat = float(element.attrib["lat"])
-            lon = float(element.attrib["lon"])
-            node["pos"].extend((lat, lon))
-          else:
-            node[key] = element.attrib[key]
+            if key in CREATED:
+                node["created"][key] = element.attrib[key]
+            elif key == "lat" or key == "lon":
+                node["pos"] = []
+                lat = float(element.attrib["lat"])
+                lon = float(element.attrib["lon"])
+                node["pos"].extend((lat, lon))
+            else:
+                node[key] = element.attrib[key]
 
         for child in element:
-          if child.tag == "tag":
-            if problemchars.search(child.attrib["k"]):
-              continue
-            if child.attrib["k"].startswith("addr:"):
-              if not lower_colon.search(child.attrib["k"].replace("addr:","")):
-                node["address"][child.attrib["k"].replace("addr:","")] = child.attrib["v"]
-          elif child.tag == "nd":
-            node["node_refs"].append(child.attrib["ref"])
-          else:
-            print child.tag, child.attrib
+            if child.tag == "tag":
+                if problemchars.search(child.attrib["k"]):
+                    continue
+                if child.attrib["k"].startswith("addr:"):
+                    if not lower_colon.search(child.attrib["k"].replace("addr:", "")):
+                        node["address"][child.attrib["k"].replace("addr:", "")] = child.attrib["v"]
+            elif child.tag == "nd":
+                node["node_refs"].append(child.attrib["ref"])
+            else:
+                print child.tag, child.attrib
 
         if not bool(node["address"]):
-          node.pop("address", None)
+            node.pop("address", None)
         if not bool(node["node_refs"]):
-          node.pop("node_refs", None)
+            node.pop("node_refs", None)
 
         return node
     else:
         return None
 
 
-def process_map(file_in, pretty = False):
+def process_map(file_in, pretty=False):
     # You do not need to change this file
     file_out = "{0}.json".format(file_in)
     data = []
@@ -146,6 +146,7 @@ def process_map(file_in, pretty = False):
                 else:
                     fo.write(json.dumps(el) + "\n")
     return data
+
 
 def test():
     # NOTE: if you are running this code on your computer, with a larger dataset,
@@ -168,12 +169,12 @@ def test():
         }
     }
     assert data[0] == correct_first_elem
-    assert data[-1]["address"] == {
-                                    "street": "West Lexington St.",
-                                    "housenumber": "1412"
-                                      }
-    assert data[-1]["node_refs"] == [ "2199822281", "2199822390",  "2199822392", "2199822369",
-                                    "2199822370", "2199822284", "2199822281"]
+    assert data[-1]["address"] == {"street": "West Lexington St.",
+                                   "housenumber": "1412"}
+
+    assert data[-1]["node_refs"] == ["2199822281", "2199822390",  "2199822392", "2199822369",
+                                     "2199822370", "2199822284", "2199822281"]
 
 if __name__ == "__main__":
     test()
+
