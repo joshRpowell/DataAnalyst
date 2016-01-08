@@ -28,11 +28,11 @@ install.packages('ggplot2')
 library(ggplot2)
 names(pf)
 qplot(x = dob_day, data = pf) +
-  scale_x_discrete(breaks=1:31)
+  scale_x_continuous(breaks=1:31)
 
 ggplot(aes(x = dob_day), data = pf) +
   geom_histogram() +
-  scale_x_discrete(breaks = 1:31)
+  scale_x_continuous(breaks = 1:31)
 ```
 
 ***
@@ -72,7 +72,7 @@ Notes:
 
 ```{r Faceting}
 qplot(x = dob_day, data = pf) +
-  scale_x_discrete(breaks=1:31) +
+  scale_x_continuous(breaks=1:31) +
   facet_wrap(~dob_month, ncol = 3)
 
 ggplot(aes(x = dob_day), data = pf) +
