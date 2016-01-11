@@ -9,7 +9,7 @@ mapparser.py
 import xml.etree.cElementTree as ET
 import pprint
 
-
+# count tags in the element tree
 def count_tags(filename):
     d = {}
     for event, elem in ET.iterparse(filename):
@@ -41,6 +41,7 @@ import xml.etree.cElementTree as ET
 import pprint
 import re
 
+# regex to identify formats to clean up
 lower = re.compile(r'^([a-z]|_)*$')
 lower_colon = re.compile(r'^([a-z]|_)*:([a-z]|_)*$')
 upper = re.compile(r'^([A-Z]|_)*$')
@@ -49,7 +50,7 @@ lower_upper_colon = re.compile(r'^([a-z]|_)*:([A-Z]|_)*$')
 
 problemchars = re.compile(r'[=\+/&<>;\'"\?%#$@\,\. \t\r\n]')
 
-
+# count key types
 def key_type(element, keys):
     if element.tag == "tag":
         for tag in element.iter("tag"):
@@ -85,7 +86,7 @@ def key_type(element, keys):
 
     return keys
 
-
+# count tag attributes
 def count_tags(element, dictionary):
     if element.tag == "tag":
         for tag in element.iter("tag"):
@@ -99,6 +100,7 @@ def count_tags(element, dictionary):
     return dictionary
 
 
+# create dictionary of formatting issues
 def process_map(filename):
     d = {}
     keys = {"lower": 0, "lower_colon": 0, "upper": 0, "upper_colon": 0, "lower_upper_colon": 0, "problemchars": 0, "other": 0}
@@ -110,8 +112,6 @@ def process_map(filename):
 
 
 def test():
-    # You can use another testfile 'map.osm' to look at your solution
-    # Note that the assertions will be incorrect then.
     osm_file = open("/Users/jpowell/Downloads/data/miami_florida.osm", "r")
 
     keys = process_map(osm_file)
@@ -124,26 +124,22 @@ if __name__ == "__main__":
 
 # In[ ]:
 
-#!/usr/bin/env python
+"""
+users.py
+"""
 
 import xml.etree.cElementTree as ET
 import pprint
 import re
-"""
-Your task is to explore the data a bit more.
-The first task is a fun one - find out how many unique users
-have contributed to the map in this particular area!
 
-The function process_map should return a set of unique user IDs ("uid")
-"""
-
+# get user attribute
 def get_user(element):
 	if 'uid' in element.attrib.keys():
 		user = element.attrib['uid']
 
 		return user
 
-
+# build dictionary of unique user ids
 def process_map(filename):
     users = set()
     user_list = []
@@ -178,16 +174,20 @@ from collections import defaultdict
 import re
 import pprint
 
-
+# regex to identify text to clean up
+# parse off last string in the address
 street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
+# parse off first string in the address
 street_direction_re = re.compile(r'^\w+', re.IGNORECASE)
 
+# list of expected streets 
 expected = ["Street", "Avenue", "Boulevard", "Drive", "Court", "Place", "Square", "Lane", "Road",
             "Trail", "Parkway", "Commons", "Circle", "Crescent", "Highway", "Manor", "Terrace",
             "Trace", "Way", "Causeway", "Point", "State Road"]
-
+# list of expeted directions in street names. Miami is on a grid system. 
 expected_direction = ["North", "South", "East", "West", "Northeast", "Northwest", "Southeast", "Southwest"]
 
+# mapping dictionaries for cleaning up street names
 # UPDATE THIS VARIABLE
 mapping = { "AVE": "Avenue",
             "Ave": "Avenue",
@@ -247,6 +247,7 @@ mapping_direction = {
 }
 
 
+# identify street types not on expected list
 def audit_street_type(street_types, street_name):
     m = street_type_re.search(update_name(street_name, mapping))
     if m:
@@ -254,7 +255,8 @@ def audit_street_type(street_types, street_name):
         if street_type not in expected:
             street_types[street_type].add(street_name)
 
-
+            
+# identify street directions not on expected list
 def audit_street_direction(street_directions, street_name):
     m = street_direction_re.search(update_name(street_name, mapping_direction))
     if m:
@@ -262,12 +264,7 @@ def audit_street_direction(street_directions, street_name):
         if street_direction not in expected_direction:
             street_directions[street_direction].add(street_name)
 
-
-def audit_state(state_name, street_name):
-    if state_name not in expected_state:
-        street_directions[street_direction].add(street_name)
-
-            
+# identify attributes to audity
 def is_street_name(elem):
     return (elem.attrib['k'] == "addr:street")
 
@@ -288,6 +285,7 @@ def is_city(elem):
     return (elem.attrib['k'] == "addr:city")
 
 
+# build dictionary of street types to audit
 def audit_type(osmfile):
     osm_file = osmfile
     street_types = defaultdict(set)
@@ -299,7 +297,7 @@ def audit_type(osmfile):
 
     return street_types
 
-
+# build dictionary of street directions to audit
 def audit_direction(osmfile):
     osm_file = osmfile
     street_directions = defaultdict(set)
@@ -318,11 +316,10 @@ def audit_direction(osmfile):
                 if is_house_no(tag):
                     print tag.attrib['v']
 
-
-  
     return street_directions
 
 
+# when string matches item in mapping dictionary replace key with value
 def update_name(name, mapping):
     m = street_type_re.search(name)
     if m:
@@ -368,7 +365,7 @@ if __name__ == '__main__':
     test()
 
 
-# In[ ]:
+# In[52]:
 
 """
 Your task is to wrangle the data and transform the shape of the data
@@ -456,15 +453,19 @@ import re
 import codecs
 import json
 from collections import defaultdict
+import phonenumbers
 
+# regex to identify formats to act on / clean up
 lower = re.compile(r'^([a-z]|_)*$')
 lower_colon = re.compile(r'^([a-z]|_)*:([a-z]|_)*$')
 problemchars = re.compile(r'[=\+/&<>;\'"\?%#$@\,\. \t\r\n]')
 street_type_re = re.compile(r'\b\S+\.?$', re.IGNORECASE)
 street_direction_re = re.compile(r'^\w+', re.IGNORECASE)
 
+# list of keys related to creation of the object
 CREATED = ["version", "changeset", "timestamp", "user", "uid"]
 
+# dictionary of values to update
 MAPPING = { "AVE": "Avenue",
             "Ave": "Avenue",
             "Ave.": "Avenue",
@@ -523,6 +524,7 @@ MAPPING_DIRECTION = {
 }
 
 
+# update street name with dictionary
 def update_name(name, mapping):
     m = street_type_re.search(name)
     if m:
@@ -539,12 +541,13 @@ def update_name(name, mapping):
     return name
 
 
+# create the element for import into MongoDB
 def shape_element(element):
-    node = {"created": {}, "type": 'node', "address": {}, "node_refs": []}
+    node = {"created": {}, "type": 'node', "address": {}, "node_refs": [], 
+            "tiger": defaultdict(), "gnis": defaultdict(), 
+            "source": {"oneway": defaultdict(), "hgv": defaultdict()}}
     if element.tag == "node" or element.tag == "way":
         node["type"] = element.tag
-        # print element.tag
-        # print element.attrib.keys()
         for key in element.attrib.keys():
             if key in CREATED:
                 node["created"][key] = element.attrib[key]
@@ -560,17 +563,33 @@ def shape_element(element):
             if child.tag == "tag":
                 if problemchars.search(child.attrib["k"]):
                     continue
+                elif child.attrib["k"].startswith("tiger:"):
+                    tiger_attribute = child.attrib["k"].replace("tiger:", "")
+                    node["tiger"][tiger_attribute] = child.attrib["v"]
+                elif child.attrib["k"].startswith("gnis:"):
+                    gnis_attribute = child.attrib["k"].replace("gnis:", "")
+                    node["gnis"][gnis_attribute] = child.attrib["v"]
+#                 elif child.attrib["k"].startswith("source:"):
+#                     source_attribute = child.attrib["k"].replace("source:", "")
+#                     if lower_colon.search(source_attribute):
+#                         if source_attribute.startswith("oneway:"):
+#                             ow_attribute = source_attribute.replace("oneway:", "")
+#                             node["source"]["oneway"][ow_attribute] = child.attrib["v"]
+#                         elif source_attribute.startswith("hgv:"):
+#                             hgv_attribute = source_attribute.replace("hgv:", "")
+#                             node["source"]["hgv"][hgv_attribute] = child.attrib["v"]
+#                     print source_attribute
+#                     print list(child.attrib["v"])
+#                     node["source"][source_attribute] = child.attrib["v"]
                 elif child.attrib["k"].startswith("addr:"):
                     addr_attribute = child.attrib["k"].replace("addr:", "")
                     if not lower_colon.search(addr_attribute):
                         if addr_attribute == "full":
                             continue
                         elif addr_attribute == "street":
-#                             print addr_attribute
-#                             print child.attrib["v"]
-#                             print update_name(child.attrib["v"], MAPPING)
-                            node["address"][addr_attribute] = update_name(child.attrib["v"], MAPPING)
-                            node["address"][addr_attribute] = update_name(child.attrib["v"], MAPPING_DIRECTION)
+                            clean_name = update_name(child.attrib["v"], MAPPING)
+                            clean_name = update_name(clean_name, MAPPING_DIRECTION)
+                            node["address"][addr_attribute] = clean_name
 #                             print node["address"]
                         elif addr_attribute == "city":
                             city = re.sub(r", Florida", "", child.attrib['v'])
@@ -585,19 +604,35 @@ def shape_element(element):
                         else:
                             node["address"][addr_attribute] = child.attrib["v"]
 #                             print node
-#                     print node["address"]
+#                     print node["tiger"]
+                elif child.attrib["k"] == "url":
+                    if not child.attrib["k"].find("http://"):
+                        node[child.attrib["k"]] = "http://" + child.attrib["v"]
+                elif child.attrib["k"] == "phone":
+                    if child.attrib["v"]:
+                        clean_phone = ''.join(i for i in child.attrib["v"] if i.isdigit())[-10:]
+                        clean_phone = phonenumbers.parse(clean_phone, "US")
+                        node[child.attrib["k"]] = phonenumbers.format_number(clean_phone, phonenumbers.PhoneNumberFormat.NATIONAL)
+
                 else: 
-                    node[child.attrib["k"]] = child.attrib["v"]
+                    node[child.attrib["k"]] = child.attrib["v"].lower().replace(" ", "_")
             elif child.tag == "nd":
                 node["node_refs"].append(child.attrib["ref"])
             else:
                 print child.tag, child.attrib
 
+        if not bool(node["tiger"]):
+            node.pop("tiger", None)
+        if not bool(node["gnis"]):
+            node.pop("gnis", None)
+        if not bool(node["source"]):
+            node.pop("source", None)
         if not bool(node["address"]):
             node.pop("address", None)
         if not bool(node["node_refs"]):
             node.pop("node_refs", None)
 
+        
 #         print node
         return node
     else:
@@ -635,12 +670,11 @@ if __name__ == "__main__":
 
 # In[ ]:
 
-#!/usr/bin/env python
-
-
+"""
+generate_sample.py
+"""
 import xml.etree.ElementTree as ET  # Use cElementTree or lxml if too slow
 
-# OSM_FILE = "osm_file.osm"  # Replace this with your osm file
 OSM_FILE = "/Users/jpowell/Downloads/data/miami_florida.osm"
 SAMPLE_FILE = "/Users/jpowell/Downloads/data/miami_florida_sample.osm"
 
@@ -671,7 +705,7 @@ with open(SAMPLE_FILE, 'wb') as output:
     output.write('</osm>')
 
 
-# In[38]:
+# In[53]:
 
 """
 mongoDB.py
@@ -682,14 +716,15 @@ mongoDB.py
 
 import sys
 sys.path.append('/usr/local/lib/python2.7/site-packages')
-
 import pymongo
 
 def get_db(db_name):
     from pymongo import MongoClient
     client = MongoClient('localhost:27017')
     db = client[db_name]
+
     return db
+
 
 def make_pipeline():
     # complete the aggregation pipeline
@@ -739,14 +774,13 @@ def make_pipeline():
 #         {"$sort": {"count": -1}}, 
 #         {"$limit": 10} 
 # top leisure categories
-        {"$group": {"_id": "$leisure", "count": {"$sum": 1}}},
-        {"$sort": {"count": -1}}, 
-        {"$limit": 10} 
-# top amenities
-#         {"$match": {"amenity": {"$exists":1}}},
-#         {"$group": {"_id": "$amenity", "count": {"$sum": 1}}},
+#         {"$group": {"_id": "$leisure", "count": {"$sum": 1}}},
 #         {"$sort": {"count": -1}}, 
 #         {"$limit": 10} 
+# top amenities
+#         {"$group": {"_id": "$amenity", "count": {"$sum": 1}}},
+#         {"$sort": {"count": -1}}, 
+#         {"$limit": 10}   
 # biggest religion
 #         {"$match": {"amenity": {"$exists":1}, "amenity":"place_of_worship"}}, 
 #         {"$group": {"_id": "$religion", "count": {"$sum": 1}}},
@@ -757,11 +791,16 @@ def make_pipeline():
 #         {"$group": {"_id": "$restaurant", "count": {"$sum": 1}}},
 #         {"$sort": {"count": -1}}, 
 #         {"$limit": 10}         
+# preview
+        {"$group": {"_id": "$phone", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}} 
+#         {"$limit": 10} 
     ]
     return pipeline
 
 def aggregate(db, pipeline):
     return [doc for doc in db.master1.aggregate(pipeline)]
+
 
 if __name__ == '__main__':
     db = get_db('miami_osm')
@@ -777,7 +816,6 @@ if __name__ == '__main__':
     pipeline = make_pipeline()
     result = aggregate(db, pipeline)
     
-
     import pprint
     pprint.pprint(result)
 

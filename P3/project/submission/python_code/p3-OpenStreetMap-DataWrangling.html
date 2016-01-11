@@ -180,7 +180,7 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">xml.etree.cElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
 
-
+<span class="c"># count tags in the element tree</span>
 <span class="k">def</span> <span class="nf">count_tags</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="k">for</span> <span class="n">event</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="n">ET</span><span class="o">.</span><span class="n">iterparse</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
@@ -220,6 +220,7 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">import</span> <span class="nn">re</span>
 
+<span class="c"># regex to identify formats to clean up</span>
 <span class="n">lower</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^([a-z]|_)*$&#39;</span><span class="p">)</span>
 <span class="n">lower_colon</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^([a-z]|_)*:([a-z]|_)*$&#39;</span><span class="p">)</span>
 <span class="n">upper</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^([A-Z]|_)*$&#39;</span><span class="p">)</span>
@@ -228,7 +229,7 @@ div#notebook {
 
 <span class="n">problemchars</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;[=\+/&amp;&lt;&gt;;</span><span class="se">\&#39;</span><span class="s">&quot;\?%#$@\,\. \t\r\n]&#39;</span><span class="p">)</span>
 
-
+<span class="c"># count key types</span>
 <span class="k">def</span> <span class="nf">key_type</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">keys</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s">&quot;tag&quot;</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s">&quot;tag&quot;</span><span class="p">):</span>
@@ -264,7 +265,7 @@ div#notebook {
 
     <span class="k">return</span> <span class="n">keys</span>
 
-
+<span class="c"># count tag attributes</span>
 <span class="k">def</span> <span class="nf">count_tags</span><span class="p">(</span><span class="n">element</span><span class="p">,</span> <span class="n">dictionary</span><span class="p">):</span>
     <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s">&quot;tag&quot;</span><span class="p">:</span>
         <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">iter</span><span class="p">(</span><span class="s">&quot;tag&quot;</span><span class="p">):</span>
@@ -278,6 +279,7 @@ div#notebook {
     <span class="k">return</span> <span class="n">dictionary</span>
 
 
+<span class="c"># create dictionary of formatting issues</span>
 <span class="k">def</span> <span class="nf">process_map</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="n">d</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">keys</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;lower&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;lower_colon&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;upper&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;upper_colon&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;lower_upper_colon&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;problemchars&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;other&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
@@ -289,8 +291,6 @@ div#notebook {
 
 
 <span class="k">def</span> <span class="nf">test</span><span class="p">():</span>
-    <span class="c"># You can use another testfile &#39;map.osm&#39; to look at your solution</span>
-    <span class="c"># Note that the assertions will be incorrect then.</span>
     <span class="n">osm_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s">&quot;/Users/jpowell/Downloads/data/miami_florida.osm&quot;</span><span class="p">,</span> <span class="s">&quot;r&quot;</span><span class="p">)</span>
 
     <span class="n">keys</span> <span class="o">=</span> <span class="n">process_map</span><span class="p">(</span><span class="n">osm_file</span><span class="p">)</span>
@@ -311,26 +311,22 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding: utf-8 -*-</span>
+<div class=" highlight hl-ipython2"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">users.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
 <span class="kn">import</span> <span class="nn">xml.etree.cElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
 <span class="kn">import</span> <span class="nn">re</span>
-<span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">Your task is to explore the data a bit more.</span>
-<span class="sd">The first task is a fun one - find out how many unique users</span>
-<span class="sd">have contributed to the map in this particular area!</span>
 
-<span class="sd">The function process_map should return a set of unique user IDs (&quot;uid&quot;)</span>
-<span class="sd">&quot;&quot;&quot;</span>
-
+<span class="c"># get user attribute</span>
 <span class="k">def</span> <span class="nf">get_user</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
 	<span class="k">if</span> <span class="s">&#39;uid&#39;</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
 		<span class="n">user</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;uid&#39;</span><span class="p">]</span>
 
 		<span class="k">return</span> <span class="n">user</span>
 
-
+<span class="c"># build dictionary of unique user ids</span>
 <span class="k">def</span> <span class="nf">process_map</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="n">users</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
     <span class="n">user_list</span> <span class="o">=</span> <span class="p">[]</span>
@@ -373,16 +369,20 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">re</span>
 <span class="kn">import</span> <span class="nn">pprint</span>
 
-
+<span class="c"># regex to identify text to clean up</span>
+<span class="c"># parse off last string in the address</span>
 <span class="n">street_type_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\b\S+\.?$&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
+<span class="c"># parse off first string in the address</span>
 <span class="n">street_direction_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^\w+&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
 
+<span class="c"># list of expected streets </span>
 <span class="n">expected</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;Street&quot;</span><span class="p">,</span> <span class="s">&quot;Avenue&quot;</span><span class="p">,</span> <span class="s">&quot;Boulevard&quot;</span><span class="p">,</span> <span class="s">&quot;Drive&quot;</span><span class="p">,</span> <span class="s">&quot;Court&quot;</span><span class="p">,</span> <span class="s">&quot;Place&quot;</span><span class="p">,</span> <span class="s">&quot;Square&quot;</span><span class="p">,</span> <span class="s">&quot;Lane&quot;</span><span class="p">,</span> <span class="s">&quot;Road&quot;</span><span class="p">,</span>
             <span class="s">&quot;Trail&quot;</span><span class="p">,</span> <span class="s">&quot;Parkway&quot;</span><span class="p">,</span> <span class="s">&quot;Commons&quot;</span><span class="p">,</span> <span class="s">&quot;Circle&quot;</span><span class="p">,</span> <span class="s">&quot;Crescent&quot;</span><span class="p">,</span> <span class="s">&quot;Highway&quot;</span><span class="p">,</span> <span class="s">&quot;Manor&quot;</span><span class="p">,</span> <span class="s">&quot;Terrace&quot;</span><span class="p">,</span>
             <span class="s">&quot;Trace&quot;</span><span class="p">,</span> <span class="s">&quot;Way&quot;</span><span class="p">,</span> <span class="s">&quot;Causeway&quot;</span><span class="p">,</span> <span class="s">&quot;Point&quot;</span><span class="p">,</span> <span class="s">&quot;State Road&quot;</span><span class="p">]</span>
-
+<span class="c"># list of expeted directions in street names. Miami is on a grid system. </span>
 <span class="n">expected_direction</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;North&quot;</span><span class="p">,</span> <span class="s">&quot;South&quot;</span><span class="p">,</span> <span class="s">&quot;East&quot;</span><span class="p">,</span> <span class="s">&quot;West&quot;</span><span class="p">,</span> <span class="s">&quot;Northeast&quot;</span><span class="p">,</span> <span class="s">&quot;Northwest&quot;</span><span class="p">,</span> <span class="s">&quot;Southeast&quot;</span><span class="p">,</span> <span class="s">&quot;Southwest&quot;</span><span class="p">]</span>
 
+<span class="c"># mapping dictionaries for cleaning up street names</span>
 <span class="c"># UPDATE THIS VARIABLE</span>
 <span class="n">mapping</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;AVE&quot;</span><span class="p">:</span> <span class="s">&quot;Avenue&quot;</span><span class="p">,</span>
             <span class="s">&quot;Ave&quot;</span><span class="p">:</span> <span class="s">&quot;Avenue&quot;</span><span class="p">,</span>
@@ -442,6 +442,7 @@ div#notebook {
 <span class="p">}</span>
 
 
+<span class="c"># identify street types not on expected list</span>
 <span class="k">def</span> <span class="nf">audit_street_type</span><span class="p">(</span><span class="n">street_types</span><span class="p">,</span> <span class="n">street_name</span><span class="p">):</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">street_type_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">update_name</span><span class="p">(</span><span class="n">street_name</span><span class="p">,</span> <span class="n">mapping</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
@@ -449,7 +450,8 @@ div#notebook {
         <span class="k">if</span> <span class="n">street_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">expected</span><span class="p">:</span>
             <span class="n">street_types</span><span class="p">[</span><span class="n">street_type</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">street_name</span><span class="p">)</span>
 
-
+            
+<span class="c"># identify street directions not on expected list</span>
 <span class="k">def</span> <span class="nf">audit_street_direction</span><span class="p">(</span><span class="n">street_directions</span><span class="p">,</span> <span class="n">street_name</span><span class="p">):</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">street_direction_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">update_name</span><span class="p">(</span><span class="n">street_name</span><span class="p">,</span> <span class="n">mapping_direction</span><span class="p">))</span>
     <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
@@ -457,12 +459,7 @@ div#notebook {
         <span class="k">if</span> <span class="n">street_direction</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">expected_direction</span><span class="p">:</span>
             <span class="n">street_directions</span><span class="p">[</span><span class="n">street_direction</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">street_name</span><span class="p">)</span>
 
-
-<span class="k">def</span> <span class="nf">audit_state</span><span class="p">(</span><span class="n">state_name</span><span class="p">,</span> <span class="n">street_name</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">state_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">expected_state</span><span class="p">:</span>
-        <span class="n">street_directions</span><span class="p">[</span><span class="n">street_direction</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">street_name</span><span class="p">)</span>
-
-            
+<span class="c"># identify attributes to audity</span>
 <span class="k">def</span> <span class="nf">is_street_name</span><span class="p">(</span><span class="n">elem</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;k&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;addr:street&quot;</span><span class="p">)</span>
 
@@ -483,6 +480,7 @@ div#notebook {
     <span class="k">return</span> <span class="p">(</span><span class="n">elem</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;k&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;addr:city&quot;</span><span class="p">)</span>
 
 
+<span class="c"># build dictionary of street types to audit</span>
 <span class="k">def</span> <span class="nf">audit_type</span><span class="p">(</span><span class="n">osmfile</span><span class="p">):</span>
     <span class="n">osm_file</span> <span class="o">=</span> <span class="n">osmfile</span>
     <span class="n">street_types</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
@@ -494,7 +492,7 @@ div#notebook {
 
     <span class="k">return</span> <span class="n">street_types</span>
 
-
+<span class="c"># build dictionary of street directions to audit</span>
 <span class="k">def</span> <span class="nf">audit_direction</span><span class="p">(</span><span class="n">osmfile</span><span class="p">):</span>
     <span class="n">osm_file</span> <span class="o">=</span> <span class="n">osmfile</span>
     <span class="n">street_directions</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">set</span><span class="p">)</span>
@@ -513,11 +511,10 @@ div#notebook {
                 <span class="k">if</span> <span class="n">is_house_no</span><span class="p">(</span><span class="n">tag</span><span class="p">):</span>
                     <span class="k">print</span> <span class="n">tag</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;v&#39;</span><span class="p">]</span>
 
-
-  
     <span class="k">return</span> <span class="n">street_directions</span>
 
 
+<span class="c"># when string matches item in mapping dictionary replace key with value</span>
 <span class="k">def</span> <span class="nf">update_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mapping</span><span class="p">):</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">street_type_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
@@ -570,7 +567,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="sd">&quot;&quot;&quot;</span>
@@ -659,15 +656,19 @@ div#notebook {
 <span class="kn">import</span> <span class="nn">codecs</span>
 <span class="kn">import</span> <span class="nn">json</span>
 <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
+<span class="kn">import</span> <span class="nn">phonenumbers</span>
 
+<span class="c"># regex to identify formats to act on / clean up</span>
 <span class="n">lower</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^([a-z]|_)*$&#39;</span><span class="p">)</span>
 <span class="n">lower_colon</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^([a-z]|_)*:([a-z]|_)*$&#39;</span><span class="p">)</span>
 <span class="n">problemchars</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;[=\+/&amp;&lt;&gt;;</span><span class="se">\&#39;</span><span class="s">&quot;\?%#$@\,\. \t\r\n]&#39;</span><span class="p">)</span>
 <span class="n">street_type_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;\b\S+\.?$&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
 <span class="n">street_direction_re</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s">r&#39;^\w+&#39;</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">IGNORECASE</span><span class="p">)</span>
 
+<span class="c"># list of keys related to creation of the object</span>
 <span class="n">CREATED</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;version&quot;</span><span class="p">,</span> <span class="s">&quot;changeset&quot;</span><span class="p">,</span> <span class="s">&quot;timestamp&quot;</span><span class="p">,</span> <span class="s">&quot;user&quot;</span><span class="p">,</span> <span class="s">&quot;uid&quot;</span><span class="p">]</span>
 
+<span class="c"># dictionary of values to update</span>
 <span class="n">MAPPING</span> <span class="o">=</span> <span class="p">{</span> <span class="s">&quot;AVE&quot;</span><span class="p">:</span> <span class="s">&quot;Avenue&quot;</span><span class="p">,</span>
             <span class="s">&quot;Ave&quot;</span><span class="p">:</span> <span class="s">&quot;Avenue&quot;</span><span class="p">,</span>
             <span class="s">&quot;Ave.&quot;</span><span class="p">:</span> <span class="s">&quot;Avenue&quot;</span><span class="p">,</span>
@@ -726,6 +727,7 @@ div#notebook {
 <span class="p">}</span>
 
 
+<span class="c"># update street name with dictionary</span>
 <span class="k">def</span> <span class="nf">update_name</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">mapping</span><span class="p">):</span>
     <span class="n">m</span> <span class="o">=</span> <span class="n">street_type_re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">m</span><span class="p">:</span>
@@ -742,12 +744,13 @@ div#notebook {
     <span class="k">return</span> <span class="n">name</span>
 
 
+<span class="c"># create the element for import into MongoDB</span>
 <span class="k">def</span> <span class="nf">shape_element</span><span class="p">(</span><span class="n">element</span><span class="p">):</span>
-    <span class="n">node</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;created&quot;</span><span class="p">:</span> <span class="p">{},</span> <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&#39;node&#39;</span><span class="p">,</span> <span class="s">&quot;address&quot;</span><span class="p">:</span> <span class="p">{},</span> <span class="s">&quot;node_refs&quot;</span><span class="p">:</span> <span class="p">[]}</span>
+    <span class="n">node</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;created&quot;</span><span class="p">:</span> <span class="p">{},</span> <span class="s">&quot;type&quot;</span><span class="p">:</span> <span class="s">&#39;node&#39;</span><span class="p">,</span> <span class="s">&quot;address&quot;</span><span class="p">:</span> <span class="p">{},</span> <span class="s">&quot;node_refs&quot;</span><span class="p">:</span> <span class="p">[],</span> 
+            <span class="s">&quot;tiger&quot;</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(),</span> <span class="s">&quot;gnis&quot;</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(),</span> 
+            <span class="s">&quot;source&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;oneway&quot;</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">(),</span> <span class="s">&quot;hgv&quot;</span><span class="p">:</span> <span class="n">defaultdict</span><span class="p">()}}</span>
     <span class="k">if</span> <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s">&quot;node&quot;</span> <span class="ow">or</span> <span class="n">element</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s">&quot;way&quot;</span><span class="p">:</span>
         <span class="n">node</span><span class="p">[</span><span class="s">&quot;type&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">tag</span>
-        <span class="c"># print element.tag</span>
-        <span class="c"># print element.attrib.keys()</span>
         <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
             <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">CREATED</span><span class="p">:</span>
                 <span class="n">node</span><span class="p">[</span><span class="s">&quot;created&quot;</span><span class="p">][</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">element</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
@@ -763,17 +766,33 @@ div#notebook {
             <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s">&quot;tag&quot;</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">problemchars</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]):</span>
                     <span class="k">continue</span>
+                <span class="k">elif</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;tiger:&quot;</span><span class="p">):</span>
+                    <span class="n">tiger_attribute</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;tiger:&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+                    <span class="n">node</span><span class="p">[</span><span class="s">&quot;tiger&quot;</span><span class="p">][</span><span class="n">tiger_attribute</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;v&quot;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;gnis:&quot;</span><span class="p">):</span>
+                    <span class="n">gnis_attribute</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;gnis:&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+                    <span class="n">node</span><span class="p">[</span><span class="s">&quot;gnis&quot;</span><span class="p">][</span><span class="n">gnis_attribute</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;v&quot;</span><span class="p">]</span>
+<span class="c">#                 elif child.attrib[&quot;k&quot;].startswith(&quot;source:&quot;):</span>
+<span class="c">#                     source_attribute = child.attrib[&quot;k&quot;].replace(&quot;source:&quot;, &quot;&quot;)</span>
+<span class="c">#                     if lower_colon.search(source_attribute):</span>
+<span class="c">#                         if source_attribute.startswith(&quot;oneway:&quot;):</span>
+<span class="c">#                             ow_attribute = source_attribute.replace(&quot;oneway:&quot;, &quot;&quot;)</span>
+<span class="c">#                             node[&quot;source&quot;][&quot;oneway&quot;][ow_attribute] = child.attrib[&quot;v&quot;]</span>
+<span class="c">#                         elif source_attribute.startswith(&quot;hgv:&quot;):</span>
+<span class="c">#                             hgv_attribute = source_attribute.replace(&quot;hgv:&quot;, &quot;&quot;)</span>
+<span class="c">#                             node[&quot;source&quot;][&quot;hgv&quot;][hgv_attribute] = child.attrib[&quot;v&quot;]</span>
+<span class="c">#                     print source_attribute</span>
+<span class="c">#                     print list(child.attrib[&quot;v&quot;])</span>
+<span class="c">#                     node[&quot;source&quot;][source_attribute] = child.attrib[&quot;v&quot;]</span>
                 <span class="k">elif</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&quot;addr:&quot;</span><span class="p">):</span>
                     <span class="n">addr_attribute</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot;addr:&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
                     <span class="k">if</span> <span class="ow">not</span> <span class="n">lower_colon</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">addr_attribute</span><span class="p">):</span>
                         <span class="k">if</span> <span class="n">addr_attribute</span> <span class="o">==</span> <span class="s">&quot;full&quot;</span><span class="p">:</span>
                             <span class="k">continue</span>
                         <span class="k">elif</span> <span class="n">addr_attribute</span> <span class="o">==</span> <span class="s">&quot;street&quot;</span><span class="p">:</span>
-<span class="c">#                             print addr_attribute</span>
-<span class="c">#                             print child.attrib[&quot;v&quot;]</span>
-<span class="c">#                             print update_name(child.attrib[&quot;v&quot;], MAPPING)</span>
-                            <span class="n">node</span><span class="p">[</span><span class="s">&quot;address&quot;</span><span class="p">][</span><span class="n">addr_attribute</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_name</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;v&quot;</span><span class="p">],</span> <span class="n">MAPPING</span><span class="p">)</span>
-                            <span class="n">node</span><span class="p">[</span><span class="s">&quot;address&quot;</span><span class="p">][</span><span class="n">addr_attribute</span><span class="p">]</span> <span class="o">=</span> <span class="n">update_name</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;v&quot;</span><span class="p">],</span> <span class="n">MAPPING_DIRECTION</span><span class="p">)</span>
+                            <span class="n">clean_name</span> <span class="o">=</span> <span class="n">update_name</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;v&quot;</span><span class="p">],</span> <span class="n">MAPPING</span><span class="p">)</span>
+                            <span class="n">clean_name</span> <span class="o">=</span> <span class="n">update_name</span><span class="p">(</span><span class="n">clean_name</span><span class="p">,</span> <span class="n">MAPPING_DIRECTION</span><span class="p">)</span>
+                            <span class="n">node</span><span class="p">[</span><span class="s">&quot;address&quot;</span><span class="p">][</span><span class="n">addr_attribute</span><span class="p">]</span> <span class="o">=</span> <span class="n">clean_name</span>
 <span class="c">#                             print node[&quot;address&quot;]</span>
                         <span class="k">elif</span> <span class="n">addr_attribute</span> <span class="o">==</span> <span class="s">&quot;city&quot;</span><span class="p">:</span>
                             <span class="n">city</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s">r&quot;, Florida&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&#39;v&#39;</span><span class="p">])</span>
@@ -788,19 +807,35 @@ div#notebook {
                         <span class="k">else</span><span class="p">:</span>
                             <span class="n">node</span><span class="p">[</span><span class="s">&quot;address&quot;</span><span class="p">][</span><span class="n">addr_attribute</span><span class="p">]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;v&quot;</span><span class="p">]</span>
 <span class="c">#                             print node</span>
-<span class="c">#                     print node[&quot;address&quot;]</span>
+<span class="c">#                     print node[&quot;tiger&quot;]</span>
+                <span class="k">elif</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;url&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">&quot;http://&quot;</span><span class="p">):</span>
+                        <span class="n">node</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="s">&quot;http://&quot;</span> <span class="o">+</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;v&quot;</span><span class="p">]</span>
+                <span class="k">elif</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="s">&quot;phone&quot;</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;v&quot;</span><span class="p">]:</span>
+                        <span class="n">clean_phone</span> <span class="o">=</span> <span class="s">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;v&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span><span class="o">.</span><span class="n">isdigit</span><span class="p">())[</span><span class="o">-</span><span class="mi">10</span><span class="p">:]</span>
+                        <span class="n">clean_phone</span> <span class="o">=</span> <span class="n">phonenumbers</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">clean_phone</span><span class="p">,</span> <span class="s">&quot;US&quot;</span><span class="p">)</span>
+                        <span class="n">node</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">phonenumbers</span><span class="o">.</span><span class="n">format_number</span><span class="p">(</span><span class="n">clean_phone</span><span class="p">,</span> <span class="n">phonenumbers</span><span class="o">.</span><span class="n">PhoneNumberFormat</span><span class="o">.</span><span class="n">NATIONAL</span><span class="p">)</span>
+
                 <span class="k">else</span><span class="p">:</span> 
-                    <span class="n">node</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;v&quot;</span><span class="p">]</span>
+                    <span class="n">node</span><span class="p">[</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;k&quot;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;v&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="s">&quot;_&quot;</span><span class="p">)</span>
             <span class="k">elif</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span> <span class="o">==</span> <span class="s">&quot;nd&quot;</span><span class="p">:</span>
                 <span class="n">node</span><span class="p">[</span><span class="s">&quot;node_refs&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">child</span><span class="o">.</span><span class="n">attrib</span><span class="p">[</span><span class="s">&quot;ref&quot;</span><span class="p">])</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="k">print</span> <span class="n">child</span><span class="o">.</span><span class="n">tag</span><span class="p">,</span> <span class="n">child</span><span class="o">.</span><span class="n">attrib</span>
 
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&quot;tiger&quot;</span><span class="p">]):</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;tiger&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&quot;gnis&quot;</span><span class="p">]):</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;gnis&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&quot;source&quot;</span><span class="p">]):</span>
+            <span class="n">node</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;source&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&quot;address&quot;</span><span class="p">]):</span>
             <span class="n">node</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;address&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">(</span><span class="n">node</span><span class="p">[</span><span class="s">&quot;node_refs&quot;</span><span class="p">]):</span>
             <span class="n">node</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s">&quot;node_refs&quot;</span><span class="p">,</span> <span class="bp">None</span><span class="p">)</span>
 
+        
 <span class="c">#         print node</span>
         <span class="k">return</span> <span class="n">node</span>
     <span class="k">else</span><span class="p">:</span>
@@ -846,12 +881,11 @@ div#notebook {
 <div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython2"><pre><span class="c">#!/usr/bin/env python</span>
-<span class="c"># -*- coding: utf-8 -*-</span>
-
+<div class=" highlight hl-ipython2"><pre><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">generate_sample.py</span>
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">xml.etree.ElementTree</span> <span class="kn">as</span> <span class="nn">ET</span>  <span class="c"># Use cElementTree or lxml if too slow</span>
 
-<span class="c"># OSM_FILE = &quot;osm_file.osm&quot;  # Replace this with your osm file</span>
 <span class="n">OSM_FILE</span> <span class="o">=</span> <span class="s">&quot;/Users/jpowell/Downloads/data/miami_florida.osm&quot;</span>
 <span class="n">SAMPLE_FILE</span> <span class="o">=</span> <span class="s">&quot;/Users/jpowell/Downloads/data/miami_florida_sample.osm&quot;</span>
 
@@ -889,7 +923,7 @@ div#notebook {
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[53]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython2"><pre><span class="sd">&quot;&quot;&quot;</span>
@@ -901,14 +935,15 @@ div#notebook {
 
 <span class="kn">import</span> <span class="nn">sys</span>
 <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s">&#39;/usr/local/lib/python2.7/site-packages&#39;</span><span class="p">)</span>
-
 <span class="kn">import</span> <span class="nn">pymongo</span>
 
 <span class="k">def</span> <span class="nf">get_db</span><span class="p">(</span><span class="n">db_name</span><span class="p">):</span>
     <span class="kn">from</span> <span class="nn">pymongo</span> <span class="kn">import</span> <span class="n">MongoClient</span>
     <span class="n">client</span> <span class="o">=</span> <span class="n">MongoClient</span><span class="p">(</span><span class="s">&#39;localhost:27017&#39;</span><span class="p">)</span>
     <span class="n">db</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="n">db_name</span><span class="p">]</span>
+
     <span class="k">return</span> <span class="n">db</span>
+
 
 <span class="k">def</span> <span class="nf">make_pipeline</span><span class="p">():</span>
     <span class="c"># complete the aggregation pipeline</span>
@@ -958,14 +993,13 @@ div#notebook {
 <span class="c">#         {&quot;$sort&quot;: {&quot;count&quot;: -1}}, </span>
 <span class="c">#         {&quot;$limit&quot;: 10} </span>
 <span class="c"># top leisure categories</span>
-        <span class="p">{</span><span class="s">&quot;$group&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;_id&quot;</span><span class="p">:</span> <span class="s">&quot;$leisure&quot;</span><span class="p">,</span> <span class="s">&quot;count&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;$sum&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}},</span>
-        <span class="p">{</span><span class="s">&quot;$sort&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;count&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}},</span> 
-        <span class="p">{</span><span class="s">&quot;$limit&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">}</span> 
-<span class="c"># top amenities</span>
-<span class="c">#         {&quot;$match&quot;: {&quot;amenity&quot;: {&quot;$exists&quot;:1}}},</span>
-<span class="c">#         {&quot;$group&quot;: {&quot;_id&quot;: &quot;$amenity&quot;, &quot;count&quot;: {&quot;$sum&quot;: 1}}},</span>
+<span class="c">#         {&quot;$group&quot;: {&quot;_id&quot;: &quot;$leisure&quot;, &quot;count&quot;: {&quot;$sum&quot;: 1}}},</span>
 <span class="c">#         {&quot;$sort&quot;: {&quot;count&quot;: -1}}, </span>
 <span class="c">#         {&quot;$limit&quot;: 10} </span>
+<span class="c"># top amenities</span>
+<span class="c">#         {&quot;$group&quot;: {&quot;_id&quot;: &quot;$amenity&quot;, &quot;count&quot;: {&quot;$sum&quot;: 1}}},</span>
+<span class="c">#         {&quot;$sort&quot;: {&quot;count&quot;: -1}}, </span>
+<span class="c">#         {&quot;$limit&quot;: 10}   </span>
 <span class="c"># biggest religion</span>
 <span class="c">#         {&quot;$match&quot;: {&quot;amenity&quot;: {&quot;$exists&quot;:1}, &quot;amenity&quot;:&quot;place_of_worship&quot;}}, </span>
 <span class="c">#         {&quot;$group&quot;: {&quot;_id&quot;: &quot;$religion&quot;, &quot;count&quot;: {&quot;$sum&quot;: 1}}},</span>
@@ -976,11 +1010,16 @@ div#notebook {
 <span class="c">#         {&quot;$group&quot;: {&quot;_id&quot;: &quot;$restaurant&quot;, &quot;count&quot;: {&quot;$sum&quot;: 1}}},</span>
 <span class="c">#         {&quot;$sort&quot;: {&quot;count&quot;: -1}}, </span>
 <span class="c">#         {&quot;$limit&quot;: 10}         </span>
+<span class="c"># preview</span>
+        <span class="p">{</span><span class="s">&quot;$group&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;_id&quot;</span><span class="p">:</span> <span class="s">&quot;$phone&quot;</span><span class="p">,</span> <span class="s">&quot;count&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;$sum&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">}}},</span>
+        <span class="p">{</span><span class="s">&quot;$sort&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s">&quot;count&quot;</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}}</span> 
+<span class="c">#         {&quot;$limit&quot;: 10} </span>
     <span class="p">]</span>
     <span class="k">return</span> <span class="n">pipeline</span>
 
 <span class="k">def</span> <span class="nf">aggregate</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">pipeline</span><span class="p">):</span>
     <span class="k">return</span> <span class="p">[</span><span class="n">doc</span> <span class="k">for</span> <span class="n">doc</span> <span class="ow">in</span> <span class="n">db</span><span class="o">.</span><span class="n">master1</span><span class="o">.</span><span class="n">aggregate</span><span class="p">(</span><span class="n">pipeline</span><span class="p">)]</span>
+
 
 <span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">&#39;__main__&#39;</span><span class="p">:</span>
     <span class="n">db</span> <span class="o">=</span> <span class="n">get_db</span><span class="p">(</span><span class="s">&#39;miami_osm&#39;</span><span class="p">)</span>
@@ -996,7 +1035,6 @@ div#notebook {
     <span class="n">pipeline</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">()</span>
     <span class="n">result</span> <span class="o">=</span> <span class="n">aggregate</span><span class="p">(</span><span class="n">db</span><span class="p">,</span> <span class="n">pipeline</span><span class="p">)</span>
     
-
     <span class="kn">import</span> <span class="nn">pprint</span>
     <span class="n">pprint</span><span class="o">.</span><span class="n">pprint</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
 </pre></div>
@@ -1011,16 +1049,463 @@ div#notebook {
 
 <div class="output_area"><div class="prompt"></div>
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>[{u&apos;_id&apos;: None, u&apos;count&apos;: 1710726},
- {u&apos;_id&apos;: u&apos;pitch&apos;, u&apos;count&apos;: 1969},
- {u&apos;_id&apos;: u&apos;park&apos;, u&apos;count&apos;: 1013},
- {u&apos;_id&apos;: u&apos;swimming_pool&apos;, u&apos;count&apos;: 713},
- {u&apos;_id&apos;: u&apos;playground&apos;, u&apos;count&apos;: 104},
- {u&apos;_id&apos;: u&apos;golf_course&apos;, u&apos;count&apos;: 100},
- {u&apos;_id&apos;: u&apos;sports_centre&apos;, u&apos;count&apos;: 79},
- {u&apos;_id&apos;: u&apos;stadium&apos;, u&apos;count&apos;: 56},
- {u&apos;_id&apos;: u&apos;marina&apos;, u&apos;count&apos;: 45},
- {u&apos;_id&apos;: u&apos;track&apos;, u&apos;count&apos;: 43}]
+<pre>[{u&apos;_id&apos;: None, u&apos;count&apos;: 1714558},
+ {u&apos;_id&apos;: u&apos;(561) 208-5900&apos;, u&apos;count&apos;: 4},
+ {u&apos;_id&apos;: u&apos;(305) 591-6621&apos;, u&apos;count&apos;: 4},
+ {u&apos;_id&apos;: u&apos;(877) 762-3477&apos;, u&apos;count&apos;: 2},
+ {u&apos;_id&apos;: u&apos;(305) 871-4221&apos;, u&apos;count&apos;: 2},
+ {u&apos;_id&apos;: u&apos;(305) 233-3150&apos;, u&apos;count&apos;: 2},
+ {u&apos;_id&apos;: u&apos;(561) 212-4453&apos;, u&apos;count&apos;: 2},
+ {u&apos;_id&apos;: u&apos;(305) 826-8266&apos;, u&apos;count&apos;: 2},
+ {u&apos;_id&apos;: u&apos;(888) 412-9779&apos;, u&apos;count&apos;: 2},
+ {u&apos;_id&apos;: u&apos;(305) 673-5774&apos;, u&apos;count&apos;: 2},
+ {u&apos;_id&apos;: u&apos;(954) 565-5790&apos;, u&apos;count&apos;: 2},
+ {u&apos;_id&apos;: u&apos;(305) 866-7033&apos;, u&apos;count&apos;: 2},
+ {u&apos;_id&apos;: u&apos;(305) 865-9555&apos;, u&apos;count&apos;: 2},
+ {u&apos;_id&apos;: u&apos;(786) 332-2634&apos;, u&apos;count&apos;: 2},
+ {u&apos;_id&apos;: u&apos;(305) 538-4361&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 532-2362&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 534-6820&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 531-5571&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 485-2200&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 673-0088&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 674-8855&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 439-1600&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(877) 220-2816&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 673-3373&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 476-2645&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 532-7093&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 531-5197&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 672-7003&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 532-0376&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 674-8200&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 538-0133&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 674-0538&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 938-1145&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 541-2125&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 672-0009&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 534-4069&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 674-8821&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(801) 240-2205&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 582-9713&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 793-1115&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 684-3015&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 683-6909&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 721-9333&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 640-5570&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 571-9700&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 952-2000&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 674-8666&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 534-0290&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 443-1515&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 443-0500&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 355-4400&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 454-5841&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 921-6500&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 923-4810&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 478-0783&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 868-0010&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 616-0105&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 499-3559&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 922-0011&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 969-6240&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 343-1322&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 531-6795&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 960-2969&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 368-1560&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 624-6952&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(855) 305-2628&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 844-2601&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 695-7777&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 579-6215&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 507-3660&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 573-6090&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 290-4820&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 266-0713&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 230-0362&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 826-8073&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 264-1203&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 576-8570&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 779-8700&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 987-5000&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 604-1776&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 923-3268&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 565-1893&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 683-4121&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 457-8557&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 571-9970&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 615-2301&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 768-2423&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 624-5363&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 748-2828&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 348-1183&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 220-1441&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 235-6754&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 949-4110&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 482-3300&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 723-0300&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 703-6804&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 935-5578&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 668-6260&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 932-2100&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 662-4187&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 561-4658&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(877) 591-5127&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 333-8507&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 866-0759&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 674-0305&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 864-2422&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(888) 805-8521&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 455-3270&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 969-6600&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 945-4712&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(800) 327-5476&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 973-1126&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 248-4202&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 731-1218&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 943-2902&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 531-3238&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 238-2922&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 668-6472&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;185555&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 431-2066&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(800) 900-9617&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 735-7575&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 247-1553&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 965-3381&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 793-2800&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 444-7501&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 532-0043&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 472-1080&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 852-8800&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 270-0359&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 797-4653&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 454-0601&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 531-5511&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 487-5300&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 460-5367&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(800) 721-2066&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 763-6601&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 593-1777&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 485-0090&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 933-3647&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 848-1188&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 486-1040&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 821-7032&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 261-2214&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 733-7550&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 485-6144&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 485-2115&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 760-7999&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 967-4653&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 547-8860&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 666-3824&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 684-2311&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 714-4966&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 733-5252&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 922-2295&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 735-4628&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 532-3350&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 854-2070&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 777-1000&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 564-9606&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 221-2123&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 604-1999&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 606-6816&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 964-7363&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 604-5700&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 604-5068&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;305443672&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 438-0488&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 491-7666&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 573-1480&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 665-0636&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 507-8008&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 688-9033&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 305-8429&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 673-4422&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(800) 372-0627&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 285-7112&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 478-8852&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 798-7405&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 553-8383&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 432-4966&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 463-2500&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 284-3233&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 798-7110&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 920-4549&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 579-5998&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 674-1160&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 272-5127&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 674-1226&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 362-6408&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 889-7738&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 921-7781&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 443-3003&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(800) 734-4667&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 538-9990&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 867-1013&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 454-1001&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 375-1492&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 442-6553&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 566-7950&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(877) 301-5478&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 503-4887&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 441-0168&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 940-0927&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 889-7734&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 455-3597&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(888) 361-8511&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 822-7360&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 972-9000&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 538-6397&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 594-7336&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 604-5951&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 443-2113&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 434-9098&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 733-2228&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 444-4237&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;1800&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 338-5031&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 484-6909&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 457-0045&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 649-3491&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 708-9137&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 249-0249&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 689-1830&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 757-0662&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 497-1630&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 795-6663&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 589-0292&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 348-2668&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 795-4333&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;305348282&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(800) 863-2819&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 751-7402&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 396-8731&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 414-2222&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 347-9566&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 748-6378&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 652-1058&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 971-7626&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 686-4300&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 471-9394&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 592-3300&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 532-4000&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 659-4020&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 463-7588&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 456-9548&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(855) 448-8726&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 448-5225&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 522-7100&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 538-8066&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 495-1144&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(941) 523-9441&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 330-0663&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 228-1888&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 972-8140&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 538-1611&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 921-0440&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 671-4620&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(877) 637-0450&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 724-7115&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(888) 909-9950&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 920-9696&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 531-0425&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 828-8950&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 975-7977&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 226-4722&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 526-3331&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 531-3341&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 622-1000&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 495-5300&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 573-4199&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 409-3100&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 938-9100&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(800) 999-3355&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 964-5700&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(800) 622-9000&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 975-0072&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 439-4721&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 640-5270&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 929-4393&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 981-6123&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 603-1003&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 665-7477&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(866) 907-5777&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 867-0106&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 535-6500&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 576-4350&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 685-5264&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 653-0047&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 347-7100&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 247-8503&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 234-2577&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 570-8114&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 627-6358&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 456-3571&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 217-8787&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 763-8665&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 534-2161&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 517-1770&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 255-5777&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 847-2346&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 258-3500&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 960-7022&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 609-2542&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 731-5841&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 593-5534&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 721-3888&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 237-3135&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 267-1356&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 559-3616&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 795-9299&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 667-3697&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 558-0220&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 756-0366&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 328-6429&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 576-4500&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 922-1600&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 531-5831&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 448-2600&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 668-1811&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 572-2270&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 763-2777&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 547-7656&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(925) 352-9393&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 398-7000&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 925-3755&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 534-6300&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 564-9601&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 935-4295&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 485-1911&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 531-0101&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 576-1135&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 606-0936&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 296-7621&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 204-3012&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 234-8800&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 735-3521&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 639-4770&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 538-5220&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 858-2500&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 233-4561&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 261-7071&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 463-3000&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 588-5208&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 792-8181&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 854-3836&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 596-5973&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 433-4600&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 372-7026&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 276-9334&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 361-8487&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(877) 750-2628&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 573-9994&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 522-4491&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 666-5979&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 672-8881&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 220-1121&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 749-2995&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 531-6421&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 971-7170&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 375-5576&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 864-3669&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 840-6868&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 973-0700&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 582-4422&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 837-6115&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 965-4166&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 704-7879&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 397-8305&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 385-5678&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 864-5252&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(800) 463-3339&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 495-1516&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 793-9980&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 278-6945&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;786564&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 880-0110&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 559-7114&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 585-6104&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 374-2444&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 271-1808&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 262-6070&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 261-4230&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 763-8844&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 517-6200&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 284-6666&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 588-4488&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 752-0333&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 665-0000&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 932-0050&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 845-8800&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 408-9800&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 672-2579&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 302-8610&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 917-1002&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 245-0311&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 284-4351&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 863-1661&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 529-9954&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 336-0457&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(888) 238-0167&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 582-4468&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 648-4868&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(800) 615-3107&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 227-9113&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;786505&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 585-1885&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 598-7877&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(888) 237-7015&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 642-7656&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 397-8628&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 361-5421&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 977-8011&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 361-0080&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 445-3557&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 854-6904&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(800) 551-7217&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 532-8934&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 408-5050&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 460-5364&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 454-0989&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 833-2886&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 361-4622&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 659-0900&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 526-9386&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 389-2100&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 478-3574&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 532-4006&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 861-1869&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 472-5000&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 248-9777&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(804) 815-5054&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 362-3300&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 684-9400&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 455-4700&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(888) 552-6816&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(786) 382-5161&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 358-1234&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 673-0400&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 248-4009&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 819-2600&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 262-7351&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 282-2225&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 735-1328&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 663-8899&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 471-8876&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(888) 749-8227&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 538-7444&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 672-7747&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(561) 433-2898&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 561-9211&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 673-8443&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 538-9908&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 752-4500&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 229-7970&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(305) 604-0049&apos;, u&apos;count&apos;: 1},
+ {u&apos;_id&apos;: u&apos;(954) 300-2229&apos;, u&apos;count&apos;: 1}]
 </pre>
 </div>
 </div>
