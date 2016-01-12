@@ -12,6 +12,9 @@ Notes:
 Notes:
 
 ```{r Scatterplots}
+install.packages("ggplot2", dependencies = T) 
+install.packages("knitr", dependencies = T)
+install.packages("dplyr", dependencies = T)
 library(ggplot2)
 getwd()
 list.files()
@@ -81,7 +84,10 @@ ggplot(aes(x = age, y = friend_count), data = pf) +
 Notes:
 
 ```{r Alpha and Jitter}
-
+ggplot(aes(x = age, y = friend_count), data = pf) + 
+  geom_point(alpha = 1/20, position = position_jitter(h = 0)) + 
+  xlim(13, 90) + 
+  coord_trans(y = 'sqrt')
 ```
 
 ***
